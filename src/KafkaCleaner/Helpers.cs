@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KafkaCleanerApp
+﻿namespace KafkaCleanerApp
 {
-    public static class FormHelpers
+    public static class Helpers
     {
         public static void UncheckAllItems(this System.Windows.Forms.CheckedListBox clb)
         {

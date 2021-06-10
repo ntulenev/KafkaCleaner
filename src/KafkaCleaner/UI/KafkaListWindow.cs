@@ -1,12 +1,11 @@
-﻿using Abstractions;
-using KafkaCleanerApp;
-using Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+
+using Abstractions;
+using KafkaCleanerApp;
+using Models;
 
 namespace KafkaCleaner.UI
 {

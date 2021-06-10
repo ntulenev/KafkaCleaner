@@ -19,4 +19,4 @@ Allows to ignore system or reserved topics.
 }
 ```
 
-Also this application could be considered as example how to use Microsoft DI and Serilog in Windows Forms App.
+Also this application could be considered as example of how to use Microsoft DI and Serilog in Windows Forms App.

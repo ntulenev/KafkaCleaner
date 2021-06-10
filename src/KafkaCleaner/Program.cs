@@ -4,10 +4,14 @@ using System.Windows.Forms;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
+using Serilog;
 
 using Abstractions;
 using KafkaCleaner.UI;
 using Logic;
+
 
 namespace KafkaCleanerApp
 {
@@ -30,6 +34,16 @@ namespace KafkaCleanerApp
                   services.AddScoped<KafkaListWindow>();
                   services.AddSingleton<IKafkaServiceClient, KafkaServiceClient>();
                   services.Configure<KafkaServiceClientConfiguration>(hostContext.Configuration.GetSection(nameof(KafkaServiceClientConfiguration)));
+
+                  var logger = new LoggerConfiguration()
+                                   .ReadFrom.Configuration(hostContext.Configuration)
+                                   .CreateLogger();
+
+                  services.AddLogging(x =>
+                  {
+                      x.SetMinimumLevel(LogLevel.Information);
+                      x.AddSerilog(logger: logger, dispose: true);
+                  });
               });
 
             var host = builder.Build();

@@ -13,8 +13,16 @@ using Abstractions;
 
 namespace Logic
 {
+    /// <summary>
+    /// Class that responsible for communication with Kafka.
+    /// </summary>
     public class KafkaServiceClient : IKafkaServiceClient
     {
+        /// <summary>
+        /// Creates <see cref="KafkaServiceClient"/>.
+        /// </summary>
+        /// <param name="logger">Logger.</param>
+        /// <param name="config">Settings.</param>
         public KafkaServiceClient(ILogger<KafkaServiceClient> logger, IOptions<KafkaServiceClientConfiguration> config)
         {
             if (config is null)
@@ -39,6 +47,7 @@ namespace Logic
             _logger.LogInformation("Instance created.");
         }
 
+        /// <inheritdoc/>
         public IEnumerable<Topic> RequestTopicsList()
         {
             try
@@ -60,6 +69,7 @@ namespace Logic
             }
         }
 
+        /// <inheritdoc/>
         public async Task DeleteTopicAsync(Topic topic)
         {
             _logger.LogInformation("Trying to remove topic {topic}.", topic.Name);

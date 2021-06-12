@@ -33,6 +33,23 @@ namespace KafkaCleaner.UI
             cbList.UncheckAllItems();
         }
 
+        private bool IsAnySelectedTopics()
+        {
+            if (cbList.CheckedItems.Count == 0)
+            {
+                _ = MessageBox.Show("No topics selected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool IsUserConfirmDeletion()
+        {
+            var dialog = MessageBox.Show($"Do you want to delete {cbList.CheckedItems.Count} topic(s)", "Delete confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            return dialog == DialogResult.Yes;
+        }
+
         private void ChangeAvailability(bool isEnabled)
         {
             bLoadData.Enabled = isEnabled;
@@ -49,22 +66,26 @@ namespace KafkaCleaner.UI
 
         private async void bDeleteData_Click(object sender, EventArgs e)
         {
-            ChangeAvailability(false);
-
-            try
+            if (IsAnySelectedTopics() && IsUserConfirmDeletion())
             {
-                foreach (var item in cbList.CheckedItems.Cast<Topic>())
+                ChangeAvailability(false);
+
+                try
                 {
-                    await _client.DeleteTopicAsync(item);
+                    foreach (var item in cbList.CheckedItems.Cast<Topic>())
+                    {
+                        await _client.DeleteTopicAsync(item);
+                    }
                 }
-            }
-            catch
-            {
-                MessageBox.Show("Error on deleting data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                catch
+                {
+                    MessageBox.Show("Error on deleting data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
-            RefreshData();
-            ChangeAvailability(true);
+                RefreshData();
+
+                ChangeAvailability(true);
+            }
         }
 
         private readonly IKafkaServiceClient _client;

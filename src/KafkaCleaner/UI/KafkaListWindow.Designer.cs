@@ -42,7 +42,7 @@ namespace KafkaCleaner.UI
             this.bLoadData.Name = "bLoadData";
             this.bLoadData.Size = new System.Drawing.Size(776, 39);
             this.bLoadData.TabIndex = 0;
-            this.bLoadData.Text = "Load data";
+            this.bLoadData.Text = "Load topics";
             this.bLoadData.UseVisualStyleBackColor = true;
             this.bLoadData.Click += new System.EventHandler(this.bLoadData_Click);
             // 
@@ -65,7 +65,7 @@ namespace KafkaCleaner.UI
             this.bDeleteData.Name = "bDeleteData";
             this.bDeleteData.Size = new System.Drawing.Size(776, 39);
             this.bDeleteData.TabIndex = 2;
-            this.bDeleteData.Text = "Delete data";
+            this.bDeleteData.Text = "Delete selected topics";
             this.bDeleteData.UseVisualStyleBackColor = true;
             this.bDeleteData.Click += new System.EventHandler(this.bDeleteData_Click);
             // 

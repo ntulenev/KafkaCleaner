@@ -20,7 +20,14 @@ namespace KafkaCleaner.UI
 
             InitializeComponent();
 
+            _defaultDeleteButtonCaption = bDeleteData.Text;
+
             _logger.LogDebug("Instance created.");
+        }
+
+        private void ShowProgress(int current, int total)
+        {
+            bDeleteData.Text = $"{++indexer}/{total}";
         }
 
         private void RefreshData()
@@ -79,6 +86,8 @@ namespace KafkaCleaner.UI
             bLoadData.Enabled = isEnabled;
             bDeleteData.Enabled = isEnabled;
             cbList.Enabled = isEnabled;
+            if (isEnabled)
+                bDeleteData.Text = _defaultDeleteButtonCaption;
         }
 
         private void bLoadData_Click(object sender, EventArgs e)
@@ -96,9 +105,13 @@ namespace KafkaCleaner.UI
 
                 try
                 {
+                    var indexer = 0;
+                    var total = cbList.CheckedItems.Count;
                     foreach (var item in cbList.CheckedItems.Cast<Topic>())
                     {
                         _logger.LogDebug("Trying to delete topic {topic}", item);
+
+                        ShowProgress(++indexer, total);
 
                         await _client.DeleteTopicAsync(item);
                     }
@@ -118,5 +131,6 @@ namespace KafkaCleaner.UI
 
         private readonly IKafkaServiceClient _client;
         private readonly ILogger<KafkaListWindow> _logger;
+        private readonly string _defaultDeleteButtonCaption;
     }
 }

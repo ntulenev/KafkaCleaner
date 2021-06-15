@@ -27,7 +27,7 @@ namespace KafkaCleaner.UI
 
         private void ShowProgress(int current, int total)
         {
-            bDeleteData.Text = $"{++indexer}/{total}";
+            bDeleteData.Text = $"{current}/{total}";
         }
 
         private void RefreshData()

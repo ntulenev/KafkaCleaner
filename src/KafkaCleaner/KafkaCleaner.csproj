@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon />
     <Win32Resource />
-	<LangVersion>9.0</LangVersion>
+	<LangVersion>10.0</LangVersion>
 	<Nullable>enable</Nullable>
 	<Platform>x64</Platform>
 	<Platforms>x64</Platforms>

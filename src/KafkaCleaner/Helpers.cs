@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace KafkaCleanerApp
+﻿namespace KafkaCleanerApp
 {
     public static class Helpers
     {

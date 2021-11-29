@@ -5,14 +5,14 @@ using Microsoft.Extensions.Options;
 namespace Logic.Configuration.Validation
 {
     /// <summary>
-    /// Validator for <see cref="KafkaServiceClientConfiguration"/>.
+    /// Validator for <see cref="BootstrapConfiguration"/>.
     /// </summary>
-    public class KafkaServiceClientConfigurationValidator : IValidateOptions<KafkaServiceClientConfiguration>
+    public class BootstrapConfigurationValidator : IValidateOptions<BootstrapConfiguration>
     {
         /// <summary>
         /// Validates <see cref="KafkaServiceClientConfiguration"/>.
         /// </summary>
-        public ValidateOptionsResult Validate(string name, KafkaServiceClientConfiguration options)
+        public ValidateOptionsResult Validate(string name, BootstrapConfiguration options)
         {
             Debug.Assert(name is not null);
             Debug.Assert(options is not null);

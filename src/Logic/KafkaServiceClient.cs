@@ -19,11 +19,19 @@ namespace Logic
         /// </summary>
         /// <param name="logger">Logger.</param>
         /// <param name="config">Settings.</param>
-        public KafkaServiceClient(ILogger<KafkaServiceClient> logger, IOptions<KafkaServiceClientConfiguration> config)
+        /// <param name="config">Kafka admin client.</param>
+        public KafkaServiceClient(ILogger<KafkaServiceClient> logger,
+                                  IOptions<KafkaServiceClientConfiguration> config,
+                                  IAdminClient adminClient)
         {
             if (config is null)
             {
                 throw new ArgumentNullException(nameof(config));
+            }
+
+            if (adminClient is null)
+            {
+                throw new ArgumentNullException(nameof(adminClient));
             }
 
             if (logger is null)
@@ -32,13 +40,8 @@ namespace Logic
             }
 
             _config = config.Value;
-
+            _adminClient = adminClient;
             _logger = logger;
-
-            _kafkaConfig = new AdminClientConfig
-            {
-                BootstrapServers = string.Join(",", _config.BootstrapServers)
-            };
 
             _logger.LogInformation("Instance created.");
         }
@@ -48,8 +51,7 @@ namespace Logic
         {
             try
             {
-                using var adminClient = new AdminClientBuilder(_kafkaConfig).Build();
-                var metadata = adminClient.GetMetadata(_config.MetadataTimeout);
+                var metadata = _adminClient.GetMetadata(_config.MetadataTimeout);
                 var topicsMetadata = metadata.Topics;
 
                 return metadata.Topics.Select(a => a.Topic)
@@ -82,8 +84,7 @@ namespace Logic
 
             try
             {
-                using var adminClient = new AdminClientBuilder(_kafkaConfig).Build();
-                await adminClient.DeleteTopicsAsync(new[] { topic.Name });
+                await _adminClient.DeleteTopicsAsync(new[] { topic.Name });
 
                 _logger.LogInformation("Topic {topic} removed.", topic.Name);
             }
@@ -95,7 +96,7 @@ namespace Logic
         }
 
         private readonly KafkaServiceClientConfiguration _config;
-        private readonly AdminClientConfig _kafkaConfig;
+        private readonly IAdminClient _adminClient;
         private readonly ILogger<KafkaServiceClient> _logger;
     }
 }

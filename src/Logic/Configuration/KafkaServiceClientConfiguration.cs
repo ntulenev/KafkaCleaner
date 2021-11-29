@@ -6,11 +6,6 @@
     public class KafkaServiceClientConfiguration
     {
         /// <summary>
-        /// List of bootstrap servers
-        /// </summary>
-        public List<string> BootstrapServers { get; set; } = default!;
-
-        /// <summary>
         /// List of reserved topics (Hided and unable to be deleted).
         /// </summary>
         public List<string> ReservedTopics { get; set; } = default!;

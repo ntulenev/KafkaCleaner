@@ -1,4 +1,4 @@
-﻿namespace Logic
+﻿namespace Logic.Configuration
 {
     /// <summary>
     /// Configuration for <see cref="KafkaServiceClient"/>.

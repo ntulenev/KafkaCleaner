@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 
 using Models;
 using Abstractions;
+using Logic.Configuration;
 
 namespace Logic
 {

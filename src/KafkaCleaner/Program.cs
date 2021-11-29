@@ -8,6 +8,7 @@ using Serilog;
 using Abstractions;
 using KafkaCleaner.UI;
 using Logic;
+using Logic.Configuration;
 
 // It is unfortunate but we have to set it to Unknown first.
 Thread.CurrentThread.SetApartmentState(ApartmentState.Unknown);

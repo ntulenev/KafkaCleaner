@@ -2,6 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 using Serilog;
 
@@ -9,6 +10,7 @@ using Abstractions;
 using KafkaCleaner.UI;
 using Logic;
 using Logic.Configuration;
+using Logic.Configuration.Validation;
 
 // It is unfortunate but we have to set it to Unknown first.
 Thread.CurrentThread.SetApartmentState(ApartmentState.Unknown);
@@ -28,6 +30,7 @@ var builder = new HostBuilder()
       services.AddScoped<KafkaListWindow>();
       services.AddSingleton<IKafkaServiceClient, KafkaServiceClient>();
       services.Configure<KafkaServiceClientConfiguration>(hostContext.Configuration.GetSection(nameof(KafkaServiceClientConfiguration)));
+      services.AddSingleton<IValidateOptions<KafkaServiceClientConfiguration>, KafkaServiceClientConfigurationValidator>();
 
       var logger = new LoggerConfiguration()
                        .ReadFrom.Configuration(hostContext.Configuration)

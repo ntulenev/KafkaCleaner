@@ -17,6 +17,26 @@ namespace Logic.Configuration.Validation
             Debug.Assert(name is not null);
             Debug.Assert(options is not null);
 
+            if (options.BootstrapServers is null)
+            {
+                return ValidateOptionsResult.Fail("BootstrapServers section is not set.");
+            }
+
+            if (!options.BootstrapServers.Any())
+            {
+                return ValidateOptionsResult.Fail("BootstrapServers section is empty.");
+            }
+
+            if (options.BootstrapServers.Any(x => String.IsNullOrEmpty(x)))
+            {
+                return ValidateOptionsResult.Fail("BootstrapServers section contains empty string.");
+            }
+
+            if (options.BootstrapServers.Any(x => String.IsNullOrWhiteSpace(x)))
+            {
+                return ValidateOptionsResult.Fail("BootstrapServers section contains empty string of whitespaces.");
+            }
+
             return ValidateOptionsResult.Success;
         }
     }

@@ -1,5 +1,5 @@
 # KafkaCleaner
-Helper utility for cleaning data in Apache Kafka. 
+Helper utility for delete topics in Apache Kafka. 
 
 ![Application](App.png)
 

@@ -7,11 +7,13 @@ Allows to ignore system or reserved topics.
 
 ```yaml
 {
-  "KafkaServiceClientConfiguration": {
-    "MetadataTimeout": "00:00:05",
+ "BootstrapConfiguration": {
     "BootstrapServers": [
       "kafka:9092"
-    ],
+    ]
+  },
+  "KafkaServiceClientConfiguration": {
+    "MetadataTimeout": "00:00:05",
     "ReservedTopics": [
       "__consumer_offsets"
     ]

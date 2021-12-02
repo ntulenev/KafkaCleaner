@@ -24,6 +24,7 @@ namespace Logic.Tests
             var loggerMock = new Mock<ILogger<KafkaServiceClient>>();
             var optinosMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
             var clientMock = new Mock<IAdminClient>();
+
             // Act
             var exception = Record.Exception(() => new KafkaServiceClient(loggerMock.Object, optinosMock.Object, clientMock.Object));
 
@@ -39,6 +40,7 @@ namespace Logic.Tests
             var loggerMock = new Mock<ILogger<KafkaServiceClient>>();
             var optinosMock = (IOptions<KafkaServiceClientConfiguration>)null!;
             var clientMock = new Mock<IAdminClient>();
+
             // Act
             var exception = Record.Exception(() => new KafkaServiceClient(loggerMock.Object, optinosMock, clientMock.Object));
 
@@ -54,6 +56,7 @@ namespace Logic.Tests
             var loggerMock = new Mock<ILogger<KafkaServiceClient>>();
             var optinosMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
             var clientMock = (IAdminClient)null!;
+
             // Act
             var exception = Record.Exception(() => new KafkaServiceClient(loggerMock.Object, optinosMock.Object, clientMock));
 
@@ -69,6 +72,7 @@ namespace Logic.Tests
             var loggerMock = (ILogger<KafkaServiceClient>)null!;
             var optinosMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
             var clientMock = new Mock<IAdminClient>();
+
             // Act
             var exception = Record.Exception(() => new KafkaServiceClient(loggerMock, optinosMock.Object, clientMock.Object));
 
@@ -112,6 +116,28 @@ namespace Logic.Tests
 
             // Assert
             result.Should().Equal(new Topic(topic1), new Topic(topic3));
+        }
+
+        [Fact(DisplayName = "KafkaServiceClient can't delete null topic.")]
+        [Trait("Category", "Unit")]
+        public async Task KafkaServiceClientCantDeleteNullTopic()
+        {
+            // Arrange
+            var loggerMock = new Mock<ILogger<KafkaServiceClient>>();
+            var optinosMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
+            var clientMock = new Mock<IAdminClient>();
+            optinosMock.Setup(x => x.Value).Returns(new KafkaServiceClientConfiguration
+            {
+            });
+            var client = new KafkaServiceClient(loggerMock.Object, optinosMock.Object, clientMock.Object);
+
+            // Act
+            var exception = await Record.ExceptionAsync(async () =>
+                                                        await client.DeleteTopicAsync(null!).ConfigureAwait(false)
+                                                       ).ConfigureAwait(false);
+
+            // Assert
+            exception.Should().NotBeNull().And.BeOfType<ArgumentNullException>();
         }
     }
 }

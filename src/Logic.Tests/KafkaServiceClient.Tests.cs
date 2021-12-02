@@ -167,5 +167,38 @@ namespace Logic.Tests
             // Assert
             exception.Should().NotBeNull().And.BeOfType<InvalidOperationException>();
         }
+
+        [Fact(DisplayName = "KafkaServiceClient can delete topic.")]
+        [Trait("Category", "Unit")]
+        public async Task KafkaServiceClientCanDeleteTopic()
+        {
+            // Arrange
+            var loggerMock = new Mock<ILogger<KafkaServiceClient>>();
+            var optinosMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
+            var clientMock = new Mock<IAdminClient>(MockBehavior.Strict);
+            var reservedTopic = "reserved";
+            var targetTopic = "target";
+            clientMock.Setup(x =>
+                    x.DeleteTopicsAsync(It.Is<IEnumerable<string>>(a => a.Single() == targetTopic),
+                                        null!))
+                .Returns(Task.CompletedTask);
+            optinosMock.Setup(x => x.Value).Returns(new KafkaServiceClientConfiguration
+            {
+                ReservedTopics = new List<string>()
+                {
+                  reservedTopic
+                }
+
+            });
+            var client = new KafkaServiceClient(loggerMock.Object, optinosMock.Object, clientMock.Object);
+
+            // Act
+            await client.DeleteTopicAsync(new Topic(targetTopic)).ConfigureAwait(false);
+
+
+            // Assert
+            clientMock.Verify(x => x.DeleteTopicsAsync(It.Is<IEnumerable<string>>(a => a.Single() == targetTopic),
+                                                       null!), Times.Once);
+        }
     }
 }

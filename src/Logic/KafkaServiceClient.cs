@@ -70,8 +70,6 @@ namespace Logic
         /// <inheritdoc/>
         public async Task DeleteTopicAsync(Topic topic)
         {
-            _logger.LogInformation("Trying to remove topic {topic}.", topic.Name);
-
             if (topic is null)
             {
                 throw new ArgumentNullException(nameof(topic));
@@ -84,6 +82,8 @@ namespace Logic
 
             try
             {
+                _logger.LogInformation("Trying to remove topic {topic}.", topic.Name);
+
                 await _adminClient.DeleteTopicsAsync(new[] { topic.Name });
 
                 _logger.LogInformation("Topic {topic} removed.", topic.Name);

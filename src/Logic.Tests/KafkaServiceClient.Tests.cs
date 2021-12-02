@@ -10,6 +10,7 @@ using Xunit;
 using FluentAssertions;
 
 using Logic.Configuration;
+using Models;
 
 namespace Logic.Tests
 {
@@ -73,6 +74,44 @@ namespace Logic.Tests
 
             // Assert
             exception.Should().NotBeNull().And.BeOfType<ArgumentNullException>();
+        }
+
+
+        [Fact(DisplayName = "KafkaServiceClient can request topic.")]
+        [Trait("Category", "Unit")]
+        public void KafkaServiceClientCanRequestTopics()
+        {
+            // Arrange
+            var loggerMock = new Mock<ILogger<KafkaServiceClient>>();
+            var optinosMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
+            var clientMock = new Mock<IAdminClient>();
+            var topic1 = "topic 1";
+            var topicReserved = "topic reserved";
+            var topic3 = "topic 3";
+            var timeout = TimeSpan.FromSeconds(42);
+            optinosMock.Setup(x => x.Value).Returns(new KafkaServiceClientConfiguration
+            {
+                ReservedTopics = new List<string>
+                {
+                    topicReserved
+                },
+                MetadataTimeout = timeout
+            });
+            var brokerTopics = new List<TopicMetadata>()
+            {
+               new TopicMetadata(topic1,new List<PartitionMetadata>(),null!),
+               new TopicMetadata(topicReserved,new List<PartitionMetadata>(),null!),
+               new TopicMetadata(topic3,new List<PartitionMetadata>(),null!),
+            };
+            var meta = new Metadata(new List<BrokerMetadata>(), brokerTopics, 1, string.Empty);
+            clientMock.Setup(x => x.GetMetadata(timeout)).Returns(meta);
+            var client = new KafkaServiceClient(loggerMock.Object, optinosMock.Object, clientMock.Object);
+
+            // Act
+            var result = client.RequestTopicsList();
+
+            // Assert
+            result.Should().Equal(new Topic(topic1), new Topic(topic3));
         }
     }
 }

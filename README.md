@@ -25,4 +25,12 @@ Allows to ignore system or reserved topics.
 }
 ```
 
+| Parameter name | Description   |
+| -------------- | ------------- |
+| BootstrapServers | List of kafka cluster servers, like "kafka-test:9092"  |
+| Username | SASL username (optional)  |
+| Password | SASL password (optional)  |
+| SecurityProtocol | Protocol used to communicate with brokers (Plaintext,Ssl,SaslPlaintext,SaslSsl) (optional)  |
+| SASLMechanism | SASL mechanism to use for authentication (Gssapi,Plain,ScramSha256,ScramSha512,OAuthBearer) (optional)  |
+
 Also this application could be considered as example of how to use Microsoft DI and Serilog in Windows Forms App.

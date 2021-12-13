@@ -10,7 +10,11 @@ Allows to ignore system or reserved topics.
  "BootstrapConfiguration": {
     "BootstrapServers": [
       "kafka:9092"
-    ]
+    ],
+    "Username": "user123",
+    "Password": "pwd123",
+    "SecurityProtocol": "SaslPlaintext",
+    "SASLMechanism": "ScramSha512"
   },
   "KafkaServiceClientConfiguration": {
     "MetadataTimeout": "00:00:05",

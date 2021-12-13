@@ -52,7 +52,11 @@ var builder = new HostBuilder()
 
           var adminConfig = new AdminClientConfig
           {
-              BootstrapServers = string.Join(",", config.BootstrapServers)
+              BootstrapServers = string.Join(",", config.BootstrapServers),
+              SecurityProtocol = config.SecurityProtocol,
+              SaslMechanism = config.SASLMechanism,
+              SaslUsername = config.Username,
+              SaslPassword = config.Password
           };
 
           return new AdminClientBuilder(adminConfig).Build();

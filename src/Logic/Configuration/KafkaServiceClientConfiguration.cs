@@ -11,7 +11,7 @@ public class KafkaServiceClientConfiguration
     public List<string> ReservedTopics { get; set; } = default!;
 
     /// <summary>
-    /// Timout for metadata request.
+    /// Timeout for metadata request.
     /// </summary>
     public TimeSpan MetadataTimeout { get; set; }
 }

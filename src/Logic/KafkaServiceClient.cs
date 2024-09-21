@@ -84,7 +84,7 @@ public class KafkaServiceClient : IKafkaServiceClient
         {
             _logger.LogInformation("Trying to remove topic {topic}.", topic.Name);
 
-            await _adminClient.DeleteTopicsAsync(new[] { topic.Name });
+            await _adminClient.DeleteTopicsAsync([topic.Name]);
 
             _logger.LogInformation("Topic {topic} removed.", topic.Name);
         }

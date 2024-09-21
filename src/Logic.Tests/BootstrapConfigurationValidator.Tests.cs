@@ -22,6 +22,11 @@ public class BootstrapConfigurationValidatorTests
         exception.Should().BeNull();
     }
 
+    private static readonly string[] sourceArray = new[]
+             {
+                 "test"
+             };
+
     [Fact(DisplayName = "BootstrapConfigurationValidator success on valid params.")]
     [Trait("Category", "Unit")]
     public void CanSuccessValidate()
@@ -29,16 +34,13 @@ public class BootstrapConfigurationValidatorTests
 
         // Arrange
         var validator = new BootstrapConfigurationValidator();
-        var optinos = new BootstrapConfiguration()
+        var options = new BootstrapConfiguration()
         {
-            BootstrapServers = new[]
-             {
-                 "test"
-             }.ToList()
+            BootstrapServers = [.. sourceArray]
         };
 
         // Act
-        ValidateOptionsResult result = validator.Validate(string.Empty, optinos);
+        ValidateOptionsResult result = validator.Validate(string.Empty, options);
 
         // Assert
         result.Should().Be(ValidateOptionsResult.Success);
@@ -51,13 +53,13 @@ public class BootstrapConfigurationValidatorTests
 
         // Arrange
         var validator = new BootstrapConfigurationValidator();
-        var optinos = new BootstrapConfiguration()
+        var options = new BootstrapConfiguration()
         {
             BootstrapServers = null!
         };
 
         // Act
-        ValidateOptionsResult result = validator.Validate(string.Empty, optinos);
+        ValidateOptionsResult result = validator.Validate(string.Empty, options);
 
         // Assert
         result.Should().NotBe(ValidateOptionsResult.Success);
@@ -71,13 +73,13 @@ public class BootstrapConfigurationValidatorTests
 
         // Arrange
         var validator = new BootstrapConfigurationValidator();
-        var optinos = new BootstrapConfiguration()
+        var options = new BootstrapConfiguration()
         {
-            BootstrapServers = new List<string>()
+            BootstrapServers = []
         };
 
         // Act
-        ValidateOptionsResult result = validator.Validate(string.Empty, optinos);
+        ValidateOptionsResult result = validator.Validate(string.Empty, options);
 
         // Assert
         result.Should().NotBe(ValidateOptionsResult.Success);
@@ -91,17 +93,17 @@ public class BootstrapConfigurationValidatorTests
 
         // Arrange
         var validator = new BootstrapConfigurationValidator();
-        var optinos = new BootstrapConfiguration()
+        var options = new BootstrapConfiguration()
         {
-            BootstrapServers = new[]
-             {
-                 "test",
-                 string.Empty
-             }.ToList()
+            BootstrapServers =
+            [
+                "test",
+                string.Empty
+            ]
         };
 
         // Act
-        ValidateOptionsResult result = validator.Validate(string.Empty, optinos);
+        ValidateOptionsResult result = validator.Validate(string.Empty, options);
 
         // Assert
         result.Should().NotBe(ValidateOptionsResult.Success);
@@ -115,17 +117,17 @@ public class BootstrapConfigurationValidatorTests
 
         // Arrange
         var validator = new BootstrapConfigurationValidator();
-        var optinos = new BootstrapConfiguration()
+        var options = new BootstrapConfiguration()
         {
-            BootstrapServers = new[]
-             {
-                 "test",
-                 null!
-             }.ToList()
+            BootstrapServers =
+            [
+                "test",
+                null!
+            ]
         };
 
         // Act
-        ValidateOptionsResult result = validator.Validate(string.Empty, optinos);
+        ValidateOptionsResult result = validator.Validate(string.Empty, options);
 
         // Assert
         result.Should().NotBe(ValidateOptionsResult.Success);
@@ -139,17 +141,17 @@ public class BootstrapConfigurationValidatorTests
 
         // Arrange
         var validator = new BootstrapConfigurationValidator();
-        var optinos = new BootstrapConfiguration()
+        var options = new BootstrapConfiguration()
         {
-            BootstrapServers = new[]
-             {
-                 "test",
-                 "     "
-             }.ToList()
+            BootstrapServers =
+            [
+                "test",
+                "     "
+            ]
         };
 
         // Act
-        ValidateOptionsResult result = validator.Validate(string.Empty, optinos);
+        ValidateOptionsResult result = validator.Validate(string.Empty, options);
 
         // Assert
         result.Should().NotBe(ValidateOptionsResult.Success);

@@ -47,7 +47,7 @@ var builder = new HostBuilder()
           if (validationResult.Failed)
           {
               throw new OptionsValidationException
-                  (string.Empty, typeof(BootstrapConfiguration), new[] { validationResult.FailureMessage });
+                  (string.Empty, typeof(BootstrapConfiguration), [validationResult.FailureMessage]);
           }
 
           var adminConfig = new AdminClientConfig
@@ -62,7 +62,8 @@ var builder = new HostBuilder()
           return new AdminClientBuilder(adminConfig).Build();
 
       });
-      services.Configure<KafkaServiceClientConfiguration>(hostContext.Configuration.GetSection(nameof(KafkaServiceClientConfiguration)));
+      services.Configure<KafkaServiceClientConfiguration>(
+          hostContext.Configuration.GetSection(nameof(KafkaServiceClientConfiguration)));
       services.Configure<BootstrapConfiguration>(hostContext.Configuration.GetSection(nameof(BootstrapConfiguration)));
       services.AddSingleton<IValidateOptions<BootstrapConfiguration>, BootstrapConfigurationValidator>();
 

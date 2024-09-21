@@ -8,13 +8,13 @@ namespace Abstractions;
 public interface IKafkaServiceClient
 {
     /// <summary>
-    /// Gets list of kafka tipics.
+    /// Gets list of Kafka topics.
     /// </summary>
     /// <returns></returns>
     public IEnumerable<Topic> RequestTopicsList();
 
     /// <summary>
-    /// Deletes kafka topic
+    /// Deletes Kafka topic
     /// </summary>
     public Task DeleteTopicAsync(Topic topic);
 }

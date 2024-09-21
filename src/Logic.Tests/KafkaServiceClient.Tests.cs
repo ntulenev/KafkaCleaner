@@ -22,11 +22,11 @@ public class KafkaServiceClientTests
     {
         // Arrange
         var loggerMock = new Mock<ILogger<KafkaServiceClient>>();
-        var optinosMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
+        var optionsMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
         var clientMock = new Mock<IAdminClient>();
 
         // Act
-        var exception = Record.Exception(() => new KafkaServiceClient(loggerMock.Object, optinosMock.Object, clientMock.Object));
+        var exception = Record.Exception(() => new KafkaServiceClient(loggerMock.Object, optionsMock.Object, clientMock.Object));
 
         // Assert
         exception.Should().BeNull();
@@ -38,11 +38,11 @@ public class KafkaServiceClientTests
     {
         // Arrange
         var loggerMock = new Mock<ILogger<KafkaServiceClient>>();
-        var optinosMock = (IOptions<KafkaServiceClientConfiguration>)null!;
+        var optionsMock = (IOptions<KafkaServiceClientConfiguration>)null!;
         var clientMock = new Mock<IAdminClient>();
 
         // Act
-        var exception = Record.Exception(() => new KafkaServiceClient(loggerMock.Object, optinosMock, clientMock.Object));
+        var exception = Record.Exception(() => new KafkaServiceClient(loggerMock.Object, optionsMock, clientMock.Object));
 
         // Assert
         exception.Should().NotBeNull().And.BeOfType<ArgumentNullException>();
@@ -54,11 +54,11 @@ public class KafkaServiceClientTests
     {
         // Arrange
         var loggerMock = new Mock<ILogger<KafkaServiceClient>>();
-        var optinosMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
+        var optionsMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
         var clientMock = (IAdminClient)null!;
 
         // Act
-        var exception = Record.Exception(() => new KafkaServiceClient(loggerMock.Object, optinosMock.Object, clientMock));
+        var exception = Record.Exception(() => new KafkaServiceClient(loggerMock.Object, optionsMock.Object, clientMock));
 
         // Assert
         exception.Should().NotBeNull().And.BeOfType<ArgumentNullException>();
@@ -70,11 +70,11 @@ public class KafkaServiceClientTests
     {
         // Arrange
         var loggerMock = (ILogger<KafkaServiceClient>)null!;
-        var optinosMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
+        var optionsMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
         var clientMock = new Mock<IAdminClient>();
 
         // Act
-        var exception = Record.Exception(() => new KafkaServiceClient(loggerMock, optinosMock.Object, clientMock.Object));
+        var exception = Record.Exception(() => new KafkaServiceClient(loggerMock, optionsMock.Object, clientMock.Object));
 
         // Assert
         exception.Should().NotBeNull().And.BeOfType<ArgumentNullException>();
@@ -87,29 +87,29 @@ public class KafkaServiceClientTests
     {
         // Arrange
         var loggerMock = new Mock<ILogger<KafkaServiceClient>>();
-        var optinosMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
+        var optionsMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
         var clientMock = new Mock<IAdminClient>();
         var topic1 = "topic 1";
         var topicReserved = "topic reserved";
         var topic3 = "topic 3";
         var timeout = TimeSpan.FromSeconds(42);
-        optinosMock.Setup(x => x.Value).Returns(new KafkaServiceClientConfiguration
+        optionsMock.Setup(x => x.Value).Returns(new KafkaServiceClientConfiguration
         {
-            ReservedTopics = new List<string>
-            {
+            ReservedTopics =
+            [
                 topicReserved
-            },
+            ],
             MetadataTimeout = timeout
         });
         var brokerTopics = new List<TopicMetadata>()
         {
-           new TopicMetadata(topic1,new List<PartitionMetadata>(),null!),
-           new TopicMetadata(topicReserved,new List<PartitionMetadata>(),null!),
-           new TopicMetadata(topic3,new List<PartitionMetadata>(),null!),
+           new(topic1,[],null!),
+           new(topicReserved,[],null!),
+           new(topic3,[],null!),
         };
-        var meta = new Metadata(new List<BrokerMetadata>(), brokerTopics, 1, string.Empty);
+        var meta = new Metadata([], brokerTopics, 1, string.Empty);
         clientMock.Setup(x => x.GetMetadata(timeout)).Returns(meta);
-        var client = new KafkaServiceClient(loggerMock.Object, optinosMock.Object, clientMock.Object);
+        var client = new KafkaServiceClient(loggerMock.Object, optionsMock.Object, clientMock.Object);
 
         // Act
         var result = client.RequestTopicsList();
@@ -124,12 +124,12 @@ public class KafkaServiceClientTests
     {
         // Arrange
         var loggerMock = new Mock<ILogger<KafkaServiceClient>>();
-        var optinosMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
+        var optionsMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
         var clientMock = new Mock<IAdminClient>();
-        optinosMock.Setup(x => x.Value).Returns(new KafkaServiceClientConfiguration
+        optionsMock.Setup(x => x.Value).Returns(new KafkaServiceClientConfiguration
         {
         });
-        var client = new KafkaServiceClient(loggerMock.Object, optinosMock.Object, clientMock.Object);
+        var client = new KafkaServiceClient(loggerMock.Object, optionsMock.Object, clientMock.Object);
 
         // Act
         var exception = await Record.ExceptionAsync(async () =>
@@ -146,18 +146,18 @@ public class KafkaServiceClientTests
     {
         // Arrange
         var loggerMock = new Mock<ILogger<KafkaServiceClient>>();
-        var optinosMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
+        var optionsMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
         var clientMock = new Mock<IAdminClient>();
         var topicName = "reserved";
-        optinosMock.Setup(x => x.Value).Returns(new KafkaServiceClientConfiguration
+        optionsMock.Setup(x => x.Value).Returns(new KafkaServiceClientConfiguration
         {
-            ReservedTopics = new List<string>()
-            {
+            ReservedTopics =
+            [
               topicName
-            }
+            ]
 
         });
-        var client = new KafkaServiceClient(loggerMock.Object, optinosMock.Object, clientMock.Object);
+        var client = new KafkaServiceClient(loggerMock.Object, optionsMock.Object, clientMock.Object);
 
         // Act
         var exception = await Record.ExceptionAsync(async () =>
@@ -174,7 +174,7 @@ public class KafkaServiceClientTests
     {
         // Arrange
         var loggerMock = new Mock<ILogger<KafkaServiceClient>>();
-        var optinosMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
+        var optionsMock = new Mock<IOptions<KafkaServiceClientConfiguration>>();
         var clientMock = new Mock<IAdminClient>(MockBehavior.Strict);
         var reservedTopic = "reserved";
         var targetTopic = "target";
@@ -182,15 +182,15 @@ public class KafkaServiceClientTests
                 x.DeleteTopicsAsync(It.Is<IEnumerable<string>>(a => a.Single() == targetTopic),
                                     null!))
             .Returns(Task.CompletedTask);
-        optinosMock.Setup(x => x.Value).Returns(new KafkaServiceClientConfiguration
+        optionsMock.Setup(x => x.Value).Returns(new KafkaServiceClientConfiguration
         {
-            ReservedTopics = new List<string>()
-            {
+            ReservedTopics =
+            [
               reservedTopic
-            }
+            ]
 
         });
-        var client = new KafkaServiceClient(loggerMock.Object, optinosMock.Object, clientMock.Object);
+        var client = new KafkaServiceClient(loggerMock.Object, optionsMock.Object, clientMock.Object);
 
         // Act
         await client.DeleteTopicAsync(new Topic(targetTopic)).ConfigureAwait(false);

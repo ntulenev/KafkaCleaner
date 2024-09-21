@@ -134,7 +134,7 @@ public class KafkaServiceClientTests
         // Act
         var exception = await Record.ExceptionAsync(async () =>
                                                     await client.DeleteTopicAsync(null!).ConfigureAwait(false)
-                                                   ).ConfigureAwait(false);
+                                                   );
 
         // Assert
         exception.Should().NotBeNull().And.BeOfType<ArgumentNullException>();
@@ -162,7 +162,7 @@ public class KafkaServiceClientTests
         // Act
         var exception = await Record.ExceptionAsync(async () =>
                                                     await client.DeleteTopicAsync(new Topic(topicName)).ConfigureAwait(false)
-                                                   ).ConfigureAwait(false);
+                                                   );
 
         // Assert
         exception.Should().NotBeNull().And.BeOfType<InvalidOperationException>();
@@ -193,7 +193,7 @@ public class KafkaServiceClientTests
         var client = new KafkaServiceClient(loggerMock.Object, optionsMock.Object, clientMock.Object);
 
         // Act
-        await client.DeleteTopicAsync(new Topic(targetTopic)).ConfigureAwait(false);
+        await client.DeleteTopicAsync(new Topic(targetTopic));
 
 
         // Assert

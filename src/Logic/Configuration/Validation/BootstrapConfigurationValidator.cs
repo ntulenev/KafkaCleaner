@@ -12,7 +12,7 @@ public class BootstrapConfigurationValidator : IValidateOptions<BootstrapConfigu
     /// <summary>
     /// Validates <see cref="KafkaServiceClientConfiguration"/>.
     /// </summary>
-    public ValidateOptionsResult Validate(string name, BootstrapConfiguration options)
+    public ValidateOptionsResult Validate(string? name, BootstrapConfiguration options)
     {
         Debug.Assert(name is not null);
         Debug.Assert(options is not null);

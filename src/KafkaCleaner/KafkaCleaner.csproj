@@ -24,11 +24,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Confluent.Kafka" Version="1.7.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0-preview.4.21253.7" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.2-dev-10289" />
-    <PackageReference Include="Serilog.Settings.Configuration" Version="3.2.0-dev-00272" />
-    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0-dev-00909" />
+    <PackageReference Include="Confluent.Kafka" Version="2.5.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.2" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

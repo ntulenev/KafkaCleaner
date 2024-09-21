@@ -1,18 +1,17 @@
-﻿namespace Logic.Configuration
+﻿namespace Logic.Configuration;
+
+/// <summary>
+/// Configuration for <see cref="KafkaServiceClient"/>.
+/// </summary>
+public class KafkaServiceClientConfiguration
 {
     /// <summary>
-    /// Configuration for <see cref="KafkaServiceClient"/>.
+    /// List of reserved topics (Hided and unable to be deleted).
     /// </summary>
-    public class KafkaServiceClientConfiguration
-    {
-        /// <summary>
-        /// List of reserved topics (Hided and unable to be deleted).
-        /// </summary>
-        public List<string> ReservedTopics { get; set; } = default!;
+    public List<string> ReservedTopics { get; set; } = default!;
 
-        /// <summary>
-        /// Timout for metadata request.
-        /// </summary>
-        public TimeSpan MetadataTimeout { get; set; }
-    }
+    /// <summary>
+    /// Timout for metadata request.
+    /// </summary>
+    public TimeSpan MetadataTimeout { get; set; }
 }

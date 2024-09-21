@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <UseWindowsForms>true</UseWindowsForms>
+	<TargetFramework>net8.0-windows</TargetFramework>
+	<UseWindowsForms>true</UseWindowsForms>
+	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <ApplicationIcon />
     <Win32Resource />
-	<LangVersion>10.0</LangVersion>
 	<Nullable>enable</Nullable>
 	<Platform>x64</Platform>
 	<Platforms>x64</Platforms>

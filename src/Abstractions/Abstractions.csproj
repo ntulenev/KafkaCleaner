@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-	<LangVersion>10.0</LangVersion>
+    <TargetFramework>net8.0</TargetFramework>
+	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	<Nullable>enable</Nullable>
 	<Platform>x64</Platform>
 	<Platforms>x64</Platforms>

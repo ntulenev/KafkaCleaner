@@ -10,8 +10,11 @@ namespace KafkaCleaner.UI;
 
 public partial class KafkaListWindow : Form
 {
+   
     public KafkaListWindow(IKafkaServiceClient client, ILogger<KafkaListWindow> logger)
     {
+        Application.SetColorMode(SystemColorMode.System);
+
         _client = client ?? throw new ArgumentNullException(nameof(client));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
